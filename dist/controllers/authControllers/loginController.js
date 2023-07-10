@@ -32,7 +32,6 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
  ******************************************************/
 const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log('REACHED BACKEND');
         // Collect info
         const { username, password } = req.body;
         const responseObject = {
@@ -46,7 +45,9 @@ const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function
             return res.status(401).json(responseObject);
         }
         // Check if user already exists or not
-        const user = (yield UserModel_1.default.findOne({ username }));
+        const user = (yield UserModel_1.default.findOne({
+            username,
+        }));
         if (!user) {
             responseObject.message = "User Is Not Registered";
             return res.status(402).json(responseObject);

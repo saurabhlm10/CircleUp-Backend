@@ -43,7 +43,7 @@ export const registerController = async (req: Request, res: Response) => {
     // Check if user already exists or not
     const userAlreadyExists = (await UserModel.findOne({
       email,
-    })) as UserModel | null;
+    })) as UserModelType | null;
     if (userAlreadyExists) {
       responseObject.message = "This Email Is Already Registered";
 
@@ -53,7 +53,7 @@ export const registerController = async (req: Request, res: Response) => {
     // Check if username available
     const usernameAvailable = (await UserModel.findOne({
       username,
-    })) as UserModel | null;
+    })) as UserModelType | null;
 
     if (usernameAvailable) {
       responseObject.message = "Username not available";
@@ -71,7 +71,7 @@ export const registerController = async (req: Request, res: Response) => {
       username,
       email,
       password: myEnPassword,
-    })) as UserModel | null;
+    })) as UserModelType | null;
 
     // Sign the Token
     jwt.sign(

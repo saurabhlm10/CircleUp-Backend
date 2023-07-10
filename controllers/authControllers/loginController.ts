@@ -20,7 +20,6 @@ import jwt from "jsonwebtoken";
 
 export const loginController = async (req: Request, res: Response) => {
   try {
-    console.log('REACHED BACKEND')
     // Collect info
     const { username, password }: Login = req.body;
 
@@ -37,7 +36,9 @@ export const loginController = async (req: Request, res: Response) => {
     }
 
     // Check if user already exists or not
-    const user = (await UserModel.findOne({ username })) as UserModel | null;
+    const user = (await UserModel.findOne({
+      username,
+    })) as UserModelType | null;
 
     if (!user) {
       responseObject.message = "User Is Not Registered";

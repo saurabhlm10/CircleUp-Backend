@@ -1,4 +1,4 @@
-interface UserModel {
+interface UserModelType {
   _id: string;
   username: string;
   email: string;
@@ -9,12 +9,10 @@ interface UserModel {
 }
 
 interface UserModelResponse {
-    _id: string;
-    username: string;
-    email: string;
-    followers: [string];
-    following: [string];
-    token?: string;
-  }
-  
-
+  _id: string;
+  username: string;
+  email: string;
+  followers: [string];
+  following: [string];
+  token?: string;
+}

@@ -5,6 +5,7 @@ import cors from "cors";
 import morgan from "morgan";
 import homeRoute from "./routes/homeRoute";
 import authRoutes from "./routes/authRoutes";
+import profileRoutes from "./routes/profileRoutes";
 
 const app: Express = express();
 
@@ -17,5 +18,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", homeRoute);
 app.use("/api/auth", authRoutes);
+app.use("/api/profile", profileRoutes);
 
 export default app;
