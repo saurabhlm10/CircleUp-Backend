@@ -9,3 +9,9 @@ interface RegisterResponseModel {
   message: string;
   id: string | undefined;
 }
+
+interface CheckUsernameResponseModel {
+  success: boolean;
+  message: string;
+  username: string;
+}

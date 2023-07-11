@@ -76,6 +76,8 @@ export const loginController = async (req: Request, res: Response) => {
     responseObject.message = "User logged in successfully";
     responseObject.user = user;
 
+    console.log(responseObject.user);
+
     // Send User and Token
     return res.status(200).json(responseObject);
   } catch (error) {

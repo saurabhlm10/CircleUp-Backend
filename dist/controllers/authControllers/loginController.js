@@ -70,6 +70,7 @@ const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function
         responseObject.success = true;
         responseObject.message = "User logged in successfully";
         responseObject.user = user;
+        console.log(responseObject.user);
         // Send User and Token
         return res.status(200).json(responseObject);
     }

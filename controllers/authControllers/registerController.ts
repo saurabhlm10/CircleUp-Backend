@@ -26,6 +26,7 @@ interface Register extends Login {
 export const registerController = async (req: Request, res: Response) => {
   try {
     // Collect info
+
     let { username, email, password }: Register = req.body;
 
     const responseObject: RegisterResponseModel = {
