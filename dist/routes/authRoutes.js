@@ -10,5 +10,5 @@ const checkUsernameController_1 = require("../controllers/authControllers/checkU
 const router = express_1.default.Router();
 router.post("/login", loginController_1.loginController);
 router.post("/register", registerController_1.registerController);
-router.post("/createusername", checkUsernameController_1.checkUsernameController);
+router.post("/checkusername", checkUsernameController_1.checkUsernameController);
 exports.default = router;
