@@ -10,13 +10,16 @@ const postSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         require: [true, "userId is required"],
     },
+    userEmail: {
+        type: String,
+        require: [true, "userEmail is required"],
+    },
     username: {
         type: String,
         require: [true, "username is required"],
     },
     likes: {
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: "User",
+        type: [String],
         default: [],
     },
     comments: {
@@ -26,9 +29,9 @@ const postSchema = new mongoose.Schema({
                     type: String,
                     required: [true, "comment is required"],
                 },
-                username: {
+                userEmail: {
                     type: String,
-                    required: [true, "username is required"],
+                    required: [true, "userEmail is required"],
                 },
                 created_at: {
                     type: Date,

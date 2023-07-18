@@ -12,51 +12,38 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createPost = void 0;
-const UserModel_1 = __importDefault(require("../../models/UserModel"));
+exports.getPosts = void 0;
 const PostModel_1 = __importDefault(require("../../models/PostModel"));
 const mongoose_1 = require("mongoose");
 const responseObject = {
     success: false,
     message: "",
-    id: "",
+    posts: [],
 };
-const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(req.user);
-        if (!req.file) {
-            responseObject.message = "File is Required";
+        const { followersArray } = req.params;
+        if (!followersArray) {
+            responseObject.message = "No Follower Array Provided";
             return res.status(401).json(responseObject);
         }
-        const { userId, username, userEmail } = req.body;
-        if (!(userId && username && userEmail)) {
-            responseObject.message = "All fields are Required";
-            return res.status(401).json(responseObject);
-        }
-        const userExists = (yield UserModel_1.default.findOne({
-            _id: userId,
-            username,
-            email: userEmail,
+        const newFollowersArray = followersArray.split(",");
+        let posts = (yield PostModel_1.default.find({
+            userEmail: { $in: newFollowersArray },
         }));
-        if (!userExists) {
-            responseObject.message = "User doesn't exist";
-            return res.status(401).json(responseObject);
-        }
-        const imageUrl = req.file.path;
-        const post = (yield PostModel_1.default.create({
-            imageUrl,
-            username,
-            userId,
-            userEmail,
-        }));
+        posts = posts.sort((a, b) => {
+            const dateA = new Date(a.createdAt);
+            const dateB = new Date(b.createdAt);
+            return dateB.getTime() - dateA.getTime();
+        });
         responseObject.success = true;
-        responseObject.message = "Post Created Successfully";
-        responseObject.id = post._id;
+        responseObject.message = "Got posts successfully";
+        responseObject.posts = posts;
         return res.status(200).json(responseObject);
     }
     catch (error) {
         console.log(error);
-        responseObject.id = '';
+        responseObject.posts = [];
         if (error instanceof mongoose_1.MongooseError) {
             responseObject.message =
                 error.name === "CastError" ? "Invalid followersArray" : error.message;
@@ -68,4 +55,4 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         }
     }
 });
-exports.createPost = createPost;
+exports.getPosts = getPosts;

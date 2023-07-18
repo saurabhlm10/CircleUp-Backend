@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import UserModel from "../../models/UserModel";
+import { MongooseError } from "mongoose";
 
 /******************************************************
  * @LOGIN
@@ -20,22 +21,21 @@ interface GetProfileByEmailResponse
   following: [string] | [];
 }
 
+const responseObject: LoginResponseModel | GetProfileByEmailResponse = {
+  success: false,
+  message: "",
+  user: {},
+};
+
 export const getProfileByEmailController = async (
   req: Request,
   res: Response
 ) => {
   try {
-
     // Collect info
     const { profileEmail } = req.params;
 
     console.log(profileEmail);
-
-    const responseObject: LoginResponseModel | GetProfileByEmailResponse = {
-      success: false,
-      message: "",
-      user: {},
-    };
 
     // Check if all fields are provided
     if (!profileEmail) {
@@ -61,8 +61,15 @@ export const getProfileByEmailController = async (
     return res.status(200).json(responseObject);
   } catch (error) {
     console.log(error);
-    res
-      .status(500)
-      .json({ success: false, message: "Something went wrong", error });
+    responseObject.user = {}
+    if (error instanceof MongooseError) {
+      responseObject.message =
+        error.name === "CastError" ? "Invalid followersArray" : error.message;
+      return res.status(401).json(responseObject);
+    }
+    if (error instanceof Error) {
+      responseObject.message = error.message;
+      return res.status(500).json(responseObject);
+    }
   }
 };

@@ -14,16 +14,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getProfileByEmailController = void 0;
 const UserModel_1 = __importDefault(require("../../models/UserModel"));
+const mongoose_1 = require("mongoose");
+const responseObject = {
+    success: false,
+    message: "",
+    user: {},
+};
 const getProfileByEmailController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Collect info
         const { profileEmail } = req.params;
         console.log(profileEmail);
-        const responseObject = {
-            success: false,
-            message: "",
-            user: {},
-        };
         // Check if all fields are provided
         if (!profileEmail) {
             responseObject.message = "Email is required";
@@ -46,9 +47,16 @@ const getProfileByEmailController = (req, res) => __awaiter(void 0, void 0, void
     }
     catch (error) {
         console.log(error);
-        res
-            .status(500)
-            .json({ success: false, message: "Something went wrong", error });
+        responseObject.user = {};
+        if (error instanceof mongoose_1.MongooseError) {
+            responseObject.message =
+                error.name === "CastError" ? "Invalid followersArray" : error.message;
+            return res.status(401).json(responseObject);
+        }
+        if (error instanceof Error) {
+            responseObject.message = error.message;
+            return res.status(500).json(responseObject);
+        }
     }
 });
 exports.getProfileByEmailController = getProfileByEmailController;

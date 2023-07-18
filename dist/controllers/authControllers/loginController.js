@@ -61,18 +61,19 @@ const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function
         // Sign token
         const token = jsonwebtoken_1.default.sign({
             id: user._id,
+            email: user.email,
             username,
         }, process.env.SECRET, {
             expiresIn: "24h",
         });
         user.password = undefined;
-        user.token = token;
+        // user.token = token;
         responseObject.success = true;
         responseObject.message = "User logged in successfully";
         responseObject.user = user;
         console.log(responseObject.user);
         // Send User and Token
-        return res.status(200).json(responseObject);
+        return res.cookie("token", token).status(200).json(responseObject);
     }
     catch (error) {
         console.log(error);

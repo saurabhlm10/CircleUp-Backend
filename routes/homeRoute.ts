@@ -2,19 +2,25 @@ import express, { Express, Request, Response, Router } from "express";
 
 const router: Router = express.Router();
 
-router.get("/", (req: Request, res: Response) => {
-  res.status(200).json({
-    message: "hello frontend",
-  });
-});
+interface HomeResponse {
+  success: boolean;
+  message: string;
+}
 
+const responseObject: HomeResponse = {
+  success: false,
+  message: "",
+};
+
+router.get("/", (req: Request, res: Response) => {
+  responseObject.message = "hello frontend";
+  res.status(200).json(responseObject);
+});
 
 router.get("/hello", (req: Request, res: Response) => {
-  res.status(200).json({
-    message: "hello to frontend",
-  });
+  responseObject.message = "hello to frontend";
+
+  res.status(200).json(responseObject);
 });
-
-
 
 export default router;

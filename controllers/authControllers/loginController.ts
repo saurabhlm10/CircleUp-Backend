@@ -60,6 +60,7 @@ export const loginController = async (req: Request, res: Response) => {
     const token: string = jwt.sign(
       {
         id: user._id,
+        email: user.email,
         username,
       },
       process.env.SECRET!,
@@ -70,7 +71,7 @@ export const loginController = async (req: Request, res: Response) => {
 
     user.password = undefined;
 
-    user.token = token;
+    // user.token = token;
 
     responseObject.success = true;
     responseObject.message = "User logged in successfully";
@@ -79,7 +80,7 @@ export const loginController = async (req: Request, res: Response) => {
     console.log(responseObject.user);
 
     // Send User and Token
-    return res.status(200).json(responseObject);
+    return res.cookie("token", token).status(200).json(responseObject);
   } catch (error) {
     console.log(error);
     res

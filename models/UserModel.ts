@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
     trim: true,
   },
   followers: {
+    //emails of followers
     type: [String],
     default: [],
   },
@@ -26,10 +27,10 @@ const userSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
-  token: {
-    type: String,
-    trim: true,
-  },
+  // token: {
+  //   type: String,
+  //   trim: true,
+  // },
 });
 
 userSchema.set("timestamps", true);
