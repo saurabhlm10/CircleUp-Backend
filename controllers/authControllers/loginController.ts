@@ -82,7 +82,6 @@ export const loginController = async (req: Request, res: Response) => {
       .cookie("token", token, {
         expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
         sameSite: "none",
-        secure: true,
       })
       .status(200)
       .json(responseObject);
