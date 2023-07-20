@@ -51,7 +51,6 @@ const checkUsernameController = (req, res) => __awaiter(void 0, void 0, void 0, 
         }
         let username;
         username = yield usernameConstructor(Googlename);
-        console.log(username);
         responseObject.success = true;
         responseObject.message = "Username Created Successfully";
         responseObject.username = username;

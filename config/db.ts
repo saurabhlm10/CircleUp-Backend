@@ -4,8 +4,6 @@ const connectToDb = (): void => {
   mongoose
     .connect(process.env.MONGO_URL!)
     .then((conn) => {
-      console.log(process.env.MONGO_URL);
-
       console.log(`connected to db at ${conn.connection.host}`);
     })
     .catch((error) => {

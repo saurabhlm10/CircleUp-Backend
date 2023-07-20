@@ -12,32 +12,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPost = void 0;
-const PostModel_1 = __importDefault(require("../../models/PostModel"));
+exports.getEmailByUsername = void 0;
 const mongoose_1 = require("mongoose");
+const UserModel_1 = __importDefault(require("../../models/UserModel"));
 const responseObject = {
     success: false,
     message: "",
-    post: {},
+    email: "",
 };
-const getPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getEmailByUsername = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { postId } = req.params;
-        if (!postId) {
-            responseObject.message = "Post Id Missing";
+        const { username } = req.params;
+        if (!username) {
+            responseObject.message = "Username is required";
             return res.status(401).json(responseObject);
         }
-        const post = (yield PostModel_1.default.findById(postId));
+        const response = (yield UserModel_1.default.findOne({
+            username,
+        }));
         responseObject.success = true;
-        responseObject.message = "Got Post Successfully";
-        responseObject.post = post;
+        responseObject.message = "Email fetched successfully";
+        responseObject.email = response === null || response === void 0 ? void 0 : response.email;
         return res.status(200).json(responseObject);
     }
     catch (error) {
-        responseObject.post = {};
+        console.log(error);
+        responseObject.email = "";
         if (error instanceof mongoose_1.MongooseError) {
             responseObject.message =
-                error.name === "CastError" ? "Invalid followersArray" : error.message;
+                error.name === "CastError" ? "Invalid username" : error.message;
             return res.status(401).json(responseObject);
         }
         if (error instanceof Error) {
@@ -46,4 +49,4 @@ const getPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
     }
 });
-exports.getPost = getPost;
+exports.getEmailByUsername = getEmailByUsername;

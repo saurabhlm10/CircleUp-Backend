@@ -23,7 +23,6 @@ const responseObject = {
 };
 const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(req.user);
         if (!req.file) {
             responseObject.message = "File is Required";
             return res.status(401).json(responseObject);

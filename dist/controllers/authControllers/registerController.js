@@ -48,7 +48,6 @@ const registerController = (req, res) => __awaiter(void 0, void 0, void 0, funct
         }
         // encrypt password
         const myEnPassword = bcryptjs_1.default.hashSync(password, 10);
-        console.log("myEnPassword", myEnPassword);
         // Create a new entry in db
         const user = (yield UserModel_1.default.create({
             username,
@@ -63,7 +62,10 @@ const registerController = (req, res) => __awaiter(void 0, void 0, void 0, funct
             responseObject.message = "User registered successfully";
             responseObject.id = user === null || user === void 0 ? void 0 : user._id;
             res
-                .cookie("token", token, { secure: true })
+                .cookie("token", token, {
+                expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+                secure: true,
+            })
                 .status(200)
                 .json(responseObject);
         });

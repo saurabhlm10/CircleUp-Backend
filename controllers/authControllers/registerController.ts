@@ -65,8 +65,6 @@ export const registerController = async (req: Request, res: Response) => {
     // encrypt password
     const myEnPassword: string = bcrypt.hashSync(password, 10);
 
-    console.log("myEnPassword", myEnPassword);
-
     // Create a new entry in db
     const user = (await UserModel.create({
       username,
@@ -86,7 +84,10 @@ export const registerController = async (req: Request, res: Response) => {
         responseObject.id = user?._id;
 
         res
-          .cookie("token", token, { secure: true })
+          .cookie("token", token, {
+            expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+            secure: true,
+          })
           .status(200)
           .json(responseObject);
       }

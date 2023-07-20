@@ -32,8 +32,6 @@ export const changeUsernameController = async (req: Request, res: Response) => {
       { username: newUsername }
     );
 
-    console.log(response);
-
     res.status(200).json(responseObject);
   } catch (error) {
     console.log(error);

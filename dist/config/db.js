@@ -8,7 +8,6 @@ const connectToDb = () => {
     mongoose_1.default
         .connect(process.env.MONGO_URL)
         .then((conn) => {
-        console.log(process.env.MONGO_URL);
         console.log(`connected to db at ${conn.connection.host}`);
     })
         .catch((error) => {

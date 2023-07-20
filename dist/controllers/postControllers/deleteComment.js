@@ -31,6 +31,8 @@ const deleteComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             $pull: {
                 comments: { _id: commentId },
             },
+        }, {
+            new: true
         });
         responseObject.success = true;
         responseObject.message = "Comment Deleted Successfully";

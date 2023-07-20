@@ -24,7 +24,6 @@ const getProfileByEmailController = (req, res) => __awaiter(void 0, void 0, void
     try {
         // Collect info
         const { profileEmail } = req.params;
-        console.log(profileEmail);
         // Check if all fields are provided
         if (!profileEmail) {
             responseObject.message = "Email is required";

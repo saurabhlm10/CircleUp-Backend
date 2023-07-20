@@ -22,7 +22,6 @@ const responseObject = {
 };
 const likePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(req.user);
         const { userEmail, postId } = req.params;
         if (!(userEmail && postId)) {
             responseObject.message = "username and postId are required";

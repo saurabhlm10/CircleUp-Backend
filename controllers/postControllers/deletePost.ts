@@ -25,8 +25,6 @@ export const deletePost = async (req: Request, res: Response) => {
       _id: postId,
     })) as PostModelType | null;
 
-    console.log(response);
-
     responseObject.success = true;
     responseObject.message = "Post Deleted Successfully";
 

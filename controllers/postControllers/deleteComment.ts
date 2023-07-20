@@ -28,6 +28,8 @@ export const deleteComment = async (req: Request, res: Response) => {
       $pull: {
         comments: { _id: commentId },
       },
+    }, {
+      new: true
     });
 
     responseObject.success = true;

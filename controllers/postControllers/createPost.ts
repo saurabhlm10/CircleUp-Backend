@@ -23,8 +23,6 @@ const responseObject: AddPostResponse = {
 
 export const createPost = async (req: Request, res: Response) => {
   try {
-    console.log(req.user);
-
     if (!req.file) {
       responseObject.message = "File is Required";
       return res.status(401).json(responseObject);

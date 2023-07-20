@@ -29,7 +29,6 @@ const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const response = (yield PostModel_1.default.findOneAndDelete({
             _id: postId,
         }));
-        console.log(response);
         responseObject.success = true;
         responseObject.message = "Post Deleted Successfully";
         return res.status(200).json(responseObject);

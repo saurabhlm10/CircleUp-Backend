@@ -27,7 +27,6 @@ const changeUsernameController = (req, res) => __awaiter(void 0, void 0, void 0,
             res.status(401).json(responseObject);
         }
         const response = yield UserModel_1.default.findOneAndUpdate({ username }, { username: newUsername });
-        console.log(response);
         res.status(200).json(responseObject);
     }
     catch (error) {

@@ -49,8 +49,6 @@ export const checkUsernameController = async (req: Request, res: Response) => {
     let username: string;
     username = await usernameConstructor(Googlename);
 
-    console.log(username);
-
     responseObject.success = true;
     responseObject.message = "Username Created Successfully";
     responseObject.username = username;

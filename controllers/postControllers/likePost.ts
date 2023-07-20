@@ -17,7 +17,6 @@ const responseObject: LikePostResponse = {
 
 export const likePost = async (req: Request, res: Response) => {
   try {
-    console.log(req.user);
     const { userEmail, postId } = req.params;
 
     if (!(userEmail && postId)) {

@@ -25,8 +25,6 @@ export const getPost = async (req: Request, res: Response) => {
 
     const post = (await PostModel.findById(postId)) as PostModelType;
 
-    console.log(post);
-
     responseObject.success = true;
     responseObject.message = "Got Post Successfully";
     responseObject.post = post;

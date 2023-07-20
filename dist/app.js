@@ -25,7 +25,7 @@ app.use((0, morgan_1.default)("tiny"));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cookie_parser_1.default)());
-app.use("/api", auth_1.auth, homeRoute_1.default);
+app.use("/api", homeRoute_1.default);
 app.use("/api/auth", authRoutes_1.default);
 app.use("/api/profile", auth_1.auth, profileRoutes_1.default);
 app.use("/api/post", auth_1.auth, postRoutes_1.default);

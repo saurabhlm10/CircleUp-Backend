@@ -77,10 +77,14 @@ export const loginController = async (req: Request, res: Response) => {
     responseObject.message = "User logged in successfully";
     responseObject.user = user;
 
-    console.log(responseObject.user);
-
     // Send User and Token
-    return res.cookie("token", token).status(200).json(responseObject);
+    return res
+      .cookie("token", token, {
+        expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+        secure: true,
+      })
+      .status(200)
+      .json(responseObject);
   } catch (error) {
     console.log(error);
     res
