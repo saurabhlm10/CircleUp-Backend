@@ -64,7 +64,8 @@ const registerController = (req, res) => __awaiter(void 0, void 0, void 0, funct
             res
                 .cookie("token", token, {
                 expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
-                secure: true,
+                sameSite: "none",
+                secure: true
             })
                 .status(200)
                 .json(responseObject);
