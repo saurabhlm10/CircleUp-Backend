@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import jwt from "jsonwebtoken";
+import demixStrings from "../helpers/demixStrings";
 
 interface MiddlewareResponse {
   success: boolean;
@@ -12,7 +13,11 @@ const responseObject: MiddlewareResponse = {
   message: "",
 };
 
-export const googleLogin = (req: Request, res: Response, next: NextFunction) => {
+export const googleLogin = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const token = req.headers.token as string;
 
   if (!token) {
@@ -21,9 +26,13 @@ export const googleLogin = (req: Request, res: Response, next: NextFunction) => 
   }
 
   try {
-    const decode = jwt.verify(token, process.env.SECRET!) as GoogleProfile;
+    // const decode = jwt.verify(token, process.env.SECRET!) as GoogleProfile;
+    // const decode = demixStrings(token, "1");
+    const decode = token;
 
-    req.user = decode as GoogleProfile;
+    console.log("DECODE", decode);
+
+    req.user = decode;
     return next();
   } catch (error) {
     if (error instanceof Error) {

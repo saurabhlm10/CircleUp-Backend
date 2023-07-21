@@ -1,10 +1,6 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.googleLogin = void 0;
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const responseObject = {
     success: false,
     message: "",
@@ -16,7 +12,10 @@ const googleLogin = (req, res, next) => {
         return res.status(401).json(responseObject);
     }
     try {
-        const decode = jsonwebtoken_1.default.verify(token, process.env.SECRET);
+        // const decode = jwt.verify(token, process.env.SECRET!) as GoogleProfile;
+        // const decode = demixStrings(token, "1");
+        const decode = token;
+        console.log("DECODE", decode);
         req.user = decode;
         return next();
     }

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { MongooseError } from "mongoose";
-import Jwt from "jsonwebtoken";
+import Jwt, { JsonWebTokenError } from "jsonwebtoken";
 
 interface GoogleLoginResponse {
   success: boolean;
@@ -14,46 +14,48 @@ const responseObject: GoogleLoginResponse = {
 
 export const googleLoginController = async (req: Request, res: Response) => {
   try {
-    console.log(req.user);
+    // console.log(req.user);
     // let user : GoogleProfile
     const { user } = req;
 
-    if(!user) {
-        responseObject.message='No user received'
-        return res.status(401).json(responseObject)
+    console.log(user)
+
+    if (!user) {
+      responseObject.message = "No user received";
+      return res.status(401).json(responseObject);
     }
 
     let token: string;
 
-    if (typeof user === "object" && "email" in user) {
-      // Extract the email from the user object
-      const email = user.email;
+    token = Jwt.sign(
+      {
+        email: user,
+      },
+      process.env.SECRET!,
+      {
+        expiresIn: "24h",
+      }
+    );
 
-      // Rest of your code
-      token = Jwt.sign(
-        {
-          email, // Use the extracted email
-        },
-        process.env.SECRET!,
-        {
-          expiresIn: "24h",
-        }
-      );
-    }
+    responseObject.success = true;
+    responseObject.message = "Token sent as cookie";
 
     return res
       .cookie("token", token!, {
         expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
-        sameSite: "none",
-        secure: true,
+        sameSite: "lax", // Set SameSite attribute to Lax
+        secure: true, // Set secure attribute for HTTPS
+        httpOnly: true, // Use httpOnly for enhanced security
+        path: "/",
+        // sameSite: "strict",
+        // secure: true,
       })
       .status(200)
       .json(responseObject);
   } catch (error) {
     console.log(error);
-    if (error instanceof MongooseError) {
-      responseObject.message =
-        error.name === "CastError" ? "Invalid followersArray" : error.message;
+    if (error instanceof JsonWebTokenError) {
+      responseObject.message = error.message;
       return res.status(401).json(responseObject);
     }
     if (error instanceof Error) {
