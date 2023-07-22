@@ -59,12 +59,12 @@ const googleLoginController = (req, res) => __awaiter(void 0, void 0, void 0, fu
         return res
             .cookie("token", token, {
             expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
-            sameSite: "lax",
+            // sameSite: "lax", // Set SameSite attribute to Lax
+            // secure: true, // Set secure attribute for HTTPS
+            // httpOnly: true, // Use httpOnly for enhanced security
+            // path: "/",
+            sameSite: "none",
             secure: true,
-            httpOnly: true,
-            path: "/",
-            // sameSite: "strict",
-            // secure: true,
         })
             .status(200)
             .json(responseObject);

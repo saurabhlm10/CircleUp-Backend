@@ -43,12 +43,12 @@ export const googleLoginController = async (req: Request, res: Response) => {
     return res
       .cookie("token", token!, {
         expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
-        sameSite: "lax", // Set SameSite attribute to Lax
-        secure: true, // Set secure attribute for HTTPS
-        httpOnly: true, // Use httpOnly for enhanced security
-        path: "/",
-        // sameSite: "strict",
-        // secure: true,
+        // sameSite: "lax", // Set SameSite attribute to Lax
+        // secure: true, // Set secure attribute for HTTPS
+        // httpOnly: true, // Use httpOnly for enhanced security
+        // path: "/",
+        sameSite: "none",
+        secure: true,
       })
       .status(200)
       .json(responseObject);
